@@ -43,7 +43,7 @@ namespace DocomoApiSDK
                 {
                     var content = new StringContent(sr.ReadToEnd(), System.Text.Encoding.UTF8, "application/json");
 
-                    var r = await client.PostAsync(path, content);
+                    var r = await client.PostAsync(path, content).ConfigureAwait(false);
 
                     var serRes = new DataContractJsonSerializer(typeof(DialogueResponse));
                     response = serRes.ReadObject(await r.Content.ReadAsStreamAsync()) as DialogueResponse;
@@ -63,7 +63,7 @@ namespace DocomoApiSDK
             string path = DOCOMO_API_KNOWLEDGEQA_PATH + ToQueryString(queryString);
 
             client.BaseAddress = new Uri(DOCOMO_API_HOST);
-            var r = await client.GetAsync(path);
+            var r = await client.GetAsync(path).ConfigureAwait(false);
 
             var serializer = new DataContractJsonSerializer(typeof(KnowledgeQAResponse));
             var response = serializer.ReadObject(await r.Content.ReadAsStreamAsync()) as KnowledgeQAResponse;
